@@ -16,3 +16,21 @@ app.get('/data', (req, res) => {
 })
 
 export default app
+
+/*
+app.put('/data/:id', (req, res) => {
+  let index = searchData(req.params.id);
+  data[index].titulo = req.body.titulo;
+  res.json(data);
+}) 
+
+app.get('/data/:id', (req, res) => {
+  let index = searchData(req.params.id);
+  res.json(data[index]);
+}) 
+
+function searchData(id) {
+  return data.findIndex(stream => stream.id === id)
+}
+
+*/
