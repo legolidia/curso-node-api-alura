@@ -1,16 +1,28 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const streamSchema = new mongoose.Schema(
-  {
-    ts: { type: Date, required: true },
-    ms_played: { type: Number, required: true },
-    master_metadata_track_name: { type: String, required: true },
-    master_metadata_album_artist_name: { type: String, required: true },
-    master_metadata_album_album_name: { type: String, required: true }
-}
-);
+const streamSchema = new mongoose.Schema({
+  ts: {
+    type: Map,
+    of: Date,
+  },
+  ms_played: {
+    type: Map,
+    of: Number,
+  },
+  master_metadata_track_name: {
+    type: Map,
+    of: String,
+  },
+  master_metadata_album_artist_name: {
+    type: Map,
+    of: String,
+  },
+  master_metadata_album_album_name: {
+    type: Map,
+    of: String,
+  },
+});
 
 const streams = mongoose.model('streams', streamSchema);
 
 export default streams;
-

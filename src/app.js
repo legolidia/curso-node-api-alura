@@ -1,45 +1,37 @@
 import express from 'express';
-import streamingData from '../streamingData.json' assert {type: 'json'};
-import db from './config/dbConnect.js';
-import streams from './models/Stream.js';
-
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-  console.log("Conectado ao banco de dados");
-});
+import StreamController from './controllers/streamsController.js';
+import mongoose from 'mongoose';
+import compression from 'compression';
 
 const app = express();
+const port = process.env.PORT || 3001;
 
-app.use(express.json());
+// Conexão com o banco de dados
+mongoose.connect('mongodb+srv://admin:lfs123@teste.vhm25nb.mongodb.net/teste', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('Conectado ao banco de dados');
+});
 
-//const data = streamingData;
+// Configurações do aplicativo
+app.use(express.json({ limit: '200mb' }));
+app.use(compression());
 
+// Rotas
 app.get('/', (req, res) => {
   res.status(200).send('Wrapped');
-})
+});
 
-app.get('/streams', (req, res) => {
-  streams.find((err, data) => {
-    res.status(200).json(streams);
-  })
-})
+app.get('/streams', StreamController.showStreams);
+app.get('/streams/:id', StreamController.getStreamById);
 
-export default app
+// Iniciar o servidor
+app.listen(port, () => {
+  console.log(`Servidor escutando em http://localhost:${port}`);
+});
 
-/*
-app.put('/data/:id', (req, res) => {
-  let index = searchData(req.params.id);
-  data[index].titulo = req.body.titulo;
-  res.json(data);
-}) 
-
-app.get('/data/:id', (req, res) => {
-  let index = searchData(req.params.id);
-  res.json(data[index]);
-}) 
-
-function searchData(id) {
-  return data.findIndex(stream => stream.id === id)
-}
-
-*/
+export default app;
