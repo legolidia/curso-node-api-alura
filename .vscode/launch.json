@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/mackleaps/Projects/legolidia/api-node-express/projetoCurso",
+      "program": "/Users/mackleaps/Projects/legolidia/api-node-express/projetoCurso/build/Debug/outDebug"
+    }
+  ]
+}
